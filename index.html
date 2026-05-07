@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XAU DESIGN | 整骨院・鍼灸院・エステのためのAI導入支援</title>
+  <meta name="description" content="柔道整復師が作った、治療院・エステ専門のAI業務改善コンサルティング。自院で実証済みのシステムを、あなたの院に。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f0e0c;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: rgba(201,168,76,0.15);
+      --cream: #f5f0e8;
+      --cream-dark: #ede5d8;
+      --mid: #6b6560;
+      --light: #a09890;
+      --white: #fdfaf5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(15,14,12,0.95), transparent);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--light);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 6rem 6rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.5s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-title .jp {
+      display: block;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--light);
+      margin-top: 1rem;
+    }
+
+    .hero-body {
+      font-size: 0.95rem;
+      line-height: 2;
+      color: var(--light);
+      max-width: 480px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.7s forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 2.5rem;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-decoration: none;
+      transition: all 0.4s;
+      opacity: 0;
+      animation: fadeUp 1s 0.9s forwards;
+    }
+
+    .hero-cta:hover {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    .hero-cta::after {
+      content: '→';
+      transition: transform 0.3s;
+    }
+
+    .hero-cta:hover::after { transform: translateX(4px); }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-visual {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 50%);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    }
+
+    .hero-stat {
+      position: absolute;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .hero-stat-1 { top: 30%; left: 15%; animation: float 6s ease-in-out infinite; }
+    .hero-stat-2 { top: 55%; left: 55%; animation: float 6s ease-in-out 2s infinite; }
+    .hero-stat-3 { top: 75%; left: 20%; animation: float 6s ease-in-out 4s infinite; }
+
+    .stat-num {
+      font-size: 4rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      opacity: 0.7;
+    }
+
+    .stat-label {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.7rem;
+      color: var(--light);
+      letter-spacing: 0.1em;
+    }
+
+    .hero-line {
+      position: absolute;
+      bottom: 3rem;
+      left: 6rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 1s 1.2s forwards;
+    }
+
+    .hero-line::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-line span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--light);
+    }
+
+    /* ── SECTION BASE ── */
+    section { position: relative; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── PROBLEM ── */
+    .problem {
+      padding: 8rem 0;
+      background: linear-gradient(to bottom, var(--ink), #161410);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .problem-body {
+      color: var(--light);
+      font-size: 0.95rem;
+      line-height: 2.2;
+    }
+
+    .problem-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .problem-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 1.5rem;
+      border: 1px solid rgba(201,168,76,0.1);
+      background: rgba(201,168,76,0.03);
+      transition: border-color 0.3s;
+    }
+
+    .problem-item:hover { border-color: rgba(201,168,76,0.3); }
+
+    .problem-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+
+    .problem-item-text {
+      font-size: 0.9rem;
+      color: var(--light);
+      line-height: 1.9;
+    }
+
+    .problem-item-text strong {
+      display: block;
+      color: var(--cream);
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      padding: 8rem 0;
+      background: #161410;
+    }
+
+    .services-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(201,168,76,0.1);
+    }
+
+    .service-card {
+      background: #161410;
+      padding: 3rem 2.5rem;
+      transition: background 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .service-card:hover { background: rgba(201,168,76,0.04); }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.15);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .service-body {
+      font-size: 0.82rem;
+      color: var(--light);
+      line-height: 2;
+    }
+
+    .service-tag {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: 8rem 0;
+      background: var(--ink);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .about-left {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .about-badge {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 2rem;
+      border: 1px solid rgba(201,168,76,0.2);
+      margin-bottom: 2rem;
+    }
+
+    .badge-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--gold);
+    }
+
+    .badge-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--light);
+    }
+
+    .about-credentials {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .about-credentials li {
+      font-size: 0.82rem;
+      color: var(--light);
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .about-credentials li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+    .about-body {
+      font-size: 0.95rem;
+      color: var(--light);
+      line-height: 2.3;
+    }
+
+    .about-body p { margin-bottom: 1.5rem; }
+
+    .about-body strong {
+      color: var(--cream);
+      font-weight: 400;
+    }
+
+    /* ── RESULTS ── */
+    .results {
+      padding: 8rem 0;
+      background: #161410;
+    }
+
+    .results-header {
+      margin-bottom: 4rem;
+    }
+
+    .result-item {
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      padding: 3rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .result-item:last-child { border-bottom: none; }
+
+    .result-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.3);
+      line-height: 1;
+    }
+
+    .result-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 0.8rem;
+    }
+
+    .result-body {
+      font-size: 0.85rem;
+      color: var(--light);
+      line-height: 2;
+    }
+
+    .result-after {
+      padding: 1.5rem;
+      background: var(--gold-dim);
+      border-left: 2px solid var(--gold);
+    }
+
+    .result-after-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .result-after-text {
+      font-size: 0.85rem;
+      color: var(--cream);
+      line-height: 1.8;
+    }
+
+    /* ── FLOW ── */
+    .flow {
+      padding: 8rem 0;
+      background: var(--ink);
+    }
+
+    .flow-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 4rem;
+      position: relative;
+    }
+
+    .flow-steps::before {
+      content: '';
+      position: absolute;
+      top: 2.5rem;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), rgba(201,168,76,0.3));
+    }
+
+    .flow-step {
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .step-circle {
+      width: 5rem;
+      height: 5rem;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      background: var(--ink);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 0.8rem;
+    }
+
+    .step-body {
+      font-size: 0.78rem;
+      color: var(--light);
+      line-height: 1.9;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 10rem 0;
+      text-align: center;
+      background: linear-gradient(to bottom, #161410, var(--ink));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 60%);
+    }
+
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .cta-body {
+      font-size: 0.9rem;
+      color: var(--light);
+      max-width: 500px;
+      margin: 0 auto 3rem;
+      line-height: 2;
+      position: relative;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      position: relative;
+    }
+
+    .btn-primary {
+      padding: 1.2rem 3rem;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      font-weight: 400;
+      transition: all 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      padding: 1.2rem 3rem;
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.05);
+    }
+
+    .cta-note {
+      margin-top: 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--mid);
+      position: relative;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 4rem;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+    }
+
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--mid);
+    }
+
+    /* ── DIVIDER ── */
+    .gold-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 1.5rem 0;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1.5rem 2rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 8rem 2rem 4rem; }
+      .hero-right { display: none; }
+      .container { padding: 0 2rem; }
+      .problem-grid,
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .flow-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .flow-steps::before { display: none; }
+      .result-item { grid-template-columns: 1fr; gap: 1rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">XAU DESIGN</a>
+    <ul class="nav-links">
+      <li><a href="#services">サービス</a></li>
+      <li><a href="#about">代表について</a></li>
+      <li><a href="#results">実績</a></li>
+      <li><a href="#contact">無料診断</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">AI CONSULTING FOR CLINICS</p>
+      <h1 class="hero-title">
+        治療院の<em>未来</em>を、<br>
+        AIで設計する。
+        <span class="jp">整骨院・鍼灸院・エステ専門のAI導入支援</span>
+      </h1>
+      <p class="hero-body">
+        「AIを使いたいけど、どこから始めればいいかわからない」<br>
+        同じ悩みを持つ院長として、自院で実証した仕組みをそのままあなたの院に。柔道整復師 × エンジニアだから、現場感覚と技術の両方で支援できます。
+      </p>
+      <a href="#contact" class="hero-cta">無料AI診断を受ける</a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual"></div>
+      <div class="hero-grid"></div>
+      <div class="hero-stat hero-stat-1">
+        <div class="stat-num">4</div>
+        <div class="stat-label">自院実証済みシステム</div>
+      </div>
+      <div class="hero-stat hero-stat-2">
+        <div class="stat-num">24h</div>
+        <div class="stat-label">LINE自動フォロー</div>
+      </div>
+      <div class="hero-stat hero-stat-3">
+        <div class="stat-num">¥0</div>
+        <div class="stat-label">初回診断費用</div>
+      </div>
+    </div>
+    <div class="hero-line">
+      <span>KYOTO-BASED · PRACTITIONER × ENGINEER</span>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="container">
+      <div class="problem-grid">
+        <div class="reveal">
+          <p class="section-label">THE PROBLEM</p>
+          <h2 class="section-title">その作業、<br>まだ手動でやっていますか？</h2>
+          <div class="gold-divider"></div>
+          <p class="problem-body">
+            LINEの返信、SNSの更新、新患フォロー、スタッフへの申し送り——。毎日繰り返される「間接業務」が、院長とスタッフの時間を消耗しています。<br><br>
+            AIを正しく導入すれば、これらの9割は自動化できます。
+          </p>
+        </div>
+        <ul class="problem-list reveal">
+          <li class="problem-item">
+            <span class="problem-icon">📱</span>
+            <div class="problem-item-text">
+              <strong>LINEの返信に追われている</strong>
+              予約確認・来院前の案内・フォローアップ。全部手動では限界があります。
+            </div>
+          </li>
+          <li class="problem-item">
+            <span class="problem-icon">📸</span>
+            <div class="problem-item-text">
+              <strong>SNS更新が続かない</strong>
+              ネタ切れ、時間不足で投稿が止まる。Instagramは更新しないと埋もれます。
+            </div>
+          </li>
+          <li class="problem-item">
+            <span class="problem-icon">🤖</span>
+            <div class="problem-item-text">
+              <strong>AIに院名が出てこない</strong>
+              ChatGPTやPerplexityで「京都の整骨院」と検索しても、あなたの院は出てきません。
+            </div>
+          </li>
+          <li class="problem-item">
+            <span class="problem-icon">📊</span>
+            <div class="problem-item-text">
+              <strong>数字を見ても経営判断できない</strong>
+              GA4・GBP・Search Consoleがバラバラで、何を改善すればいいかわからない。
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="services-header reveal">
+        <p class="section-label">SERVICES</p>
+        <h2 class="section-title">自院で実証した仕組みを、<br>あなたの院に導入します。</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-num">01</div>
+          <h3 class="service-title">LINE × AI<br>新患フォロー自動化</h3>
+          <p class="service-body">予約後〜来院前・初回来院後・定着・離脱防止の4フェーズを全自動化。スタッフの工数ゼロで24時間対応。月200通まで無料枠で運用可能。</p>
+          <span class="service-tag">IMPLEMENTED</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">02</div>
+          <h3 class="service-title">LLMO対策 ＋<br>Web集客ダッシュボード</h3>
+          <p class="service-body">AI検索（ChatGPT・Perplexity）に院名を登場させるための施策。GA4・GBP・Search Consoleを統合した経営ダッシュボードの構築もセットで。</p>
+          <span class="service-tag">IMPLEMENTED</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">03</div>
+          <h3 class="service-title">スタッフ向け<br>次回予約フレームワーク</h3>
+          <p class="service-body">「売り込み」の罪悪感をなくし、臨床根拠から次回予約を推奨できるスタッフの仕組みづくり。トークマニュアル＋タブレットアプリをセットで提供。</p>
+          <span class="service-tag">IMPLEMENTED</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">04</div>
+          <h3 class="service-title">AI姿勢・動作<br>分析ツール（院独自開発）</h3>
+          <p class="service-body">スマートフォン1台で姿勢・歩行を自動数値化。初診評価・施術前後比較・患者説明ツールとして活用。院の診療哲学に合わせてカスタム設計。</p>
+          <span class="service-tag">IN DEVELOPMENT</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">05</div>
+          <h3 class="service-title">SNS投稿<br>自動生成システム</h3>
+          <p class="service-body">施術内容・季節・患者の悩みを入力するだけでInstagram投稿文・ハッシュタグを自動生成。週次投稿カレンダーの自動提案も。</p>
+          <span class="service-tag">AVAILABLE</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">06</div>
+          <h3 class="service-title">AI問診 ＋<br>カルテ自動生成</h3>
+          <p class="service-body">LINEやWebで事前問診→Claude APIが構造化してカルテ形式に変換。主訴・既往歴・生活習慣を自動整理し、施術者が見るべきポイントをサマリーで提示。</p>
+          <span class="service-tag">AVAILABLE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-left reveal">
+          <p class="section-label">ABOUT</p>
+          <div class="about-badge">
+            <span class="badge-title">SHIN</span>
+            <span class="badge-sub">XAU DESIGN 代表</span>
+          </div>
+          <ul class="about-credentials">
+            <li>柔道整復師（国家資格）</li>
+            <li>せぼねや京都 院長</li>
+            <li>Base Conditioning Lab 代表</li>
+            <li>Python / FastAPI / React エンジニア</li>
+            <li>Anthropic Claude API 実装経験</li>
+            <li>Google Analytics / GBP 運用</li>
+          </ul>
+        </div>
+        <div class="about-body reveal">
+          <p>
+            「AIを使いたい」と思った整骨院の院長が最初に直面する壁は、<strong>「業界のことを知らないIT会社に相談しても的外れな提案しか来ない」</strong>という問題です。
+          </p>
+          <p>
+            XAU DESIGNは、柔道整復師として整骨院を経営しながら、同時にPythonエンジニアとしてAIシステムを自ら開発・運用してきた代表が立ち上げたコンサルティングサービスです。
+          </p>
+          <p>
+            提案するすべてのシステムは<strong>自院（せぼねや京都）で先行導入・検証済み</strong>です。「机上の理論」ではなく、実際の患者・スタッフ・経営数値と向き合いながら作り上げた仕組みを、そのままあなたの院に届けます。
+          </p>
+          <p>
+            保険請求の構造、スタッフの心理的ハードル、患者との信頼形成——治療院特有の課題を理解しているからこそ、現場で機能するAI導入ができます。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="results" id="results">
+    <div class="container">
+      <div class="results-header reveal">
+        <p class="section-label">RESULTS</p>
+        <h2 class="section-title">自院での実証実績</h2>
+      </div>
+
+      <div class="result-item reveal">
+        <div class="result-num">01</div>
+        <div>
+          <h3 class="result-title">次回予約推奨フレームワーク</h3>
+          <p class="result-body">スタッフが次回予約を患者に勧める際の心理的ハードルを、臨床根拠の論理構造で解消。トークマニュアルとタブレットアプリをセットで整備。</p>
+        </div>
+        <div class="result-after">
+          <p class="result-after-label">RESULT</p>
+          <p class="result-after-text">スタッフの「売り込み感」による躊躇がなくなり、自信を持って次回予約を推奨できるようになった。</p>
+        </div>
+      </div>
+
+      <div class="result-item reveal">
+        <div class="result-num">02</div>
+        <div>
+          <h3 class="result-title">LLMO対策 ＋ 集客ダッシュボード</h3>
+          <p class="result-body">AI検索に院名が登場しない問題を発見。LLM専用ページ新設・ヘッダーメタコード追加・GBPメニュー最適化を実施。GA4・GBP・Search Console統合ダッシュボードも構築。</p>
+        </div>
+        <div class="result-after">
+          <p class="result-after-label">RESULT</p>
+          <p class="result-after-text">集客指標の視認性が向上し、経営判断のスピードが上がった。LLMO施策は効果測定フェーズへ。</p>
+        </div>
+      </div>
+
+      <div class="result-item reveal">
+        <div class="result-num">03</div>
+        <div>
+          <h3 class="result-title">LINE × AI新患フォロー自動化</h3>
+          <p class="result-body">予約後〜来院前・初回来院後・2回目以降の定着・離脱防止の4フェーズを設計。FastAPI + Claude API + Google Sheetsで構築。Renderにデプロイ済み。</p>
+        </div>
+        <div class="result-after">
+          <p class="result-after-label">RESULT</p>
+          <p class="result-after-text">スタッフの手動LINE送信がゼロに。24時間・個別最適化されたフォローが自動送信される体制が完成。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOW -->
+  <section class="flow">
+    <div class="container">
+      <div style="text-align:center; margin-bottom: 1rem;" class="reveal">
+        <p class="section-label">PROCESS</p>
+        <h2 class="section-title">導入の流れ</h2>
+      </div>
+      <div class="flow-steps">
+        <div class="flow-step reveal">
+          <div class="step-circle">1</div>
+          <h4 class="step-title">無料AI診断</h4>
+          <p class="step-body">現状のWeb・LINE・スタッフ運用を10問で棚卸し。AIが個別診断レポートを自動生成します。</p>
+        </div>
+        <div class="flow-step reveal">
+          <div class="step-circle">2</div>
+          <h4 class="step-title">設計・提案</h4>
+          <p class="step-body">課題の優先順位と導入ロードマップを提示。何から始めるべきかを明確にします。</p>
+        </div>
+        <div class="flow-step reveal">
+          <div class="step-circle">3</div>
+          <h4 class="step-title">実装・導入</h4>
+          <p class="step-body">自院と同じ構成のシステムをあなたの院に合わせてカスタム実装。技術的な作業はすべてお任せください。</p>
+        </div>
+        <div class="flow-step reveal">
+          <div class="step-circle">4</div>
+          <h4 class="step-title">定着・改善</h4>
+          <p class="step-body">月次KPIレビューで数値を見ながら継続改善。「入れて終わり」にしません。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="contact">
+    <div class="container">
+      <p class="section-label" style="text-align:center;">FREE CONSULTATION</p>
+      <h2 class="cta-title">まず、無料AI診断から<br>始めてみませんか。</h2>
+      <p class="cta-body">
+        10問に答えるだけで、あなたの院が最初に導入すべきAIツールを個別診断します。費用は一切かかりません。
+      </p>
+      <div class="cta-buttons">
+        <a href="https://forms.gle/XXXXXX" class="btn-primary">無料AI診断を受ける</a>
+        <a href="https://lin.ee/XXXXXX" class="btn-secondary">LINEで相談する</a>
+      </div>
+      <p class="cta-note">※ 初回診断は完全無料です。しつこい営業は一切行いません。</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">XAU DESIGN</span>
+    <span class="footer-copy">© 2025 XAU DESIGN. ALL RIGHTS RESERVED.</span>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Nav scroll effect
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        nav.style.background = 'rgba(15,14,12,0.97)';
+        nav.style.backdropFilter = 'blur(10px)';
+      } else {
+        nav.style.background = 'linear-gradient(to bottom, rgba(15,14,12,0.95), transparent)';
+        nav.style.backdropFilter = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
