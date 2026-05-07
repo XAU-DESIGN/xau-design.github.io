@@ -711,6 +711,182 @@
       color: var(--mid);
     }
 
+    /* ── PRICING ── */
+    .pricing {
+      padding: 8rem 0;
+      background: var(--ink);
+    }
+
+    .pricing-header { text-align: center; margin-bottom: 1.5rem; }
+
+    .pricing-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.6rem 1.5rem;
+      border: 1px solid var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    .pricing-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .pricing-badge-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+    }
+
+    .pricing-note {
+      font-size: 0.82rem;
+      color: var(--light);
+      margin-bottom: 3rem;
+      line-height: 2;
+    }
+
+    .pricing-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 3rem;
+      border: 1px solid rgba(201,168,76,0.2);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .pricing-tab {
+      padding: 0.8rem 2.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--light);
+      cursor: pointer;
+      transition: all 0.3s;
+      background: transparent;
+      border: none;
+    }
+
+    .pricing-tab.active { background: var(--gold); color: var(--ink); }
+
+    .pricing-panel { display: none; }
+    .pricing-panel.active { display: block; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5px;
+      background: rgba(201,168,76,0.1);
+    }
+
+    .pricing-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(201,168,76,0.1);
+    }
+
+    .price-card {
+      background: #0f0e0c;
+      padding: 2.5rem 2rem;
+      transition: background 0.3s;
+    }
+
+    .price-card:hover { background: rgba(201,168,76,0.04); }
+
+    .price-card-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+
+    .price-card-desc {
+      font-size: 0.75rem;
+      color: var(--light);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+      min-height: 4.5rem;
+    }
+
+    .price-original {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--mid);
+      text-decoration: line-through;
+      margin-bottom: 0.3rem;
+    }
+
+    .price-current {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .price-current span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--light);
+      margin-left: 0.3rem;
+    }
+
+    .price-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.25rem 0.7rem;
+      background: var(--gold-dim);
+      border: 1px solid rgba(201,168,76,0.3);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+
+    .price-fixed-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.25rem 0.7rem;
+      background: rgba(201,168,76,0.03);
+      border: 1px solid rgba(201,168,76,0.12);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+    }
+
+    .pricing-footer-note {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      color: var(--mid);
+      line-height: 2.2;
+    }
+
+    @media (max-width: 900px) {
+      .pricing-grid,
+      .pricing-grid-2 { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .pricing-grid,
+      .pricing-grid-2 { grid-template-columns: 1fr; }
+      .pricing-tab { padding: 0.8rem 1.2rem; font-size: 0.62rem; }
+    }
+
     /* ── DIVIDER ── */
     .gold-divider {
       width: 40px;
@@ -770,6 +946,7 @@
       <li><a href="#services">サービス</a></li>
       <li><a href="#about">代表について</a></li>
       <li><a href="#results">実績</a></li>
+      <li><a href="#pricing">料金</a></li>
       <li><a href="#contact">無料診断</a></li>
     </ul>
   </nav>
@@ -988,6 +1165,99 @@
     </div>
   </section>
 
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="pricing-header reveal">
+        <p class="section-label">PRICING</p>
+        <h2 class="section-title">料金プラン</h2>
+        <div class="gold-divider" style="margin: 1.5rem auto;"></div>
+        <div class="pricing-badge">
+          <span class="pricing-badge-dot"></span>
+          <span class="pricing-badge-text">先行導入特別価格 実施中</span>
+        </div>
+        <p class="pricing-note">
+          XAU DESIGNの先行導入にご契約いただいた先着5院に限り、通常価格より特別価格にてご提供します。<br>
+          正式リリース後は通常価格に移行いたします。
+        </p>
+      </div>
+
+      <div class="reveal" style="text-align:center;">
+        <div class="pricing-tabs">
+          <button class="pricing-tab active" onclick="switchTab('package')">パッケージ</button>
+          <button class="pricing-tab" onclick="switchTab('monthly')">月額プラン</button>
+        </div>
+      </div>
+
+      <!-- パッケージ -->
+      <div class="pricing-panel active reveal" id="tab-package">
+        <div class="pricing-grid">
+          <div class="price-card">
+            <h3 class="price-card-name">AIワークショップ</h3>
+            <p class="price-card-desc">3時間の少人数講習。LINE Bot・LLMO・SNS自動化を実際に触りながら学ぶ。院に持ち帰ってすぐ使える。</p>
+            <p class="price-original">通常 ¥50,000</p>
+            <p class="price-current">¥30,000</p>
+            <span class="price-fixed-tag">FIXED PRICE</span>
+          </div>
+          <div class="price-card">
+            <h3 class="price-card-name">Web集客<br>診断パッケージ</h3>
+            <p class="price-card-desc">LLMO対策・GBP最適化・GA4+Search Console統合ダッシュボード構築・改善レポートのセット。</p>
+            <p class="price-original">通常 ¥100,000〜</p>
+            <p class="price-current">¥50,000<span>〜</span></p>
+            <span class="price-tag">SPECIAL PRICE</span>
+          </div>
+          <div class="price-card">
+            <h3 class="price-card-name">LINE自動化<br>導入パッケージ</h3>
+            <p class="price-card-desc">予約〜来院前・初回後・定着・離脱防止の4フェーズを院に合わせてフルカスタム実装。</p>
+            <p class="price-original">通常 ¥150,000〜</p>
+            <p class="price-current">¥80,000<span>〜</span></p>
+            <span class="price-tag">SPECIAL PRICE</span>
+          </div>
+          <div class="price-card">
+            <h3 class="price-card-name">フルAI導入<br>パッケージ</h3>
+            <p class="price-card-desc">Web集客診断＋LINE自動化＋姿勢分析ツール＋スタッフフレームワーク整備。すべてをまとめて導入。</p>
+            <p class="price-original">通常 ¥300,000〜</p>
+            <p class="price-current">¥150,000<span>〜</span></p>
+            <span class="price-tag">SPECIAL PRICE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 月額 -->
+      <div class="pricing-panel reveal" id="tab-monthly">
+        <div class="pricing-grid-2">
+          <div class="price-card">
+            <h3 class="price-card-name">ライトプラン</h3>
+            <p class="price-card-desc">月次KPIレビュー＋改善提案レポートの提供。数字を見ながら経営判断をサポート。</p>
+            <p class="price-original">通常 ¥30,000/月</p>
+            <p class="price-current">¥15,000<span>/月</span></p>
+            <span class="price-tag">SPECIAL PRICE</span>
+          </div>
+          <div class="price-card">
+            <h3 class="price-card-name">スタンダードプラン</h3>
+            <p class="price-card-desc">ライト＋システム保守・改修＋SNS投稿文の自動生成。導入後の継続改善まで任せたい院向け。</p>
+            <p class="price-original">通常 ¥60,000/月</p>
+            <p class="price-current">¥30,000<span>/月</span></p>
+            <span class="price-tag">SPECIAL PRICE</span>
+          </div>
+          <div class="price-card">
+            <h3 class="price-card-name">フルサポートプラン</h3>
+            <p class="price-card-desc">スタンダード＋優先対応＋新機能追加。AIを経営の中核に据えて本格活用したい院向け。</p>
+            <p class="price-original">通常 ¥100,000〜/月</p>
+            <p class="price-current">¥50,000<span>〜/月</span></p>
+            <span class="price-tag">SPECIAL PRICE</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="pricing-footer-note reveal">
+        ※ 先行導入特別価格は先着5院限定です。定員に達し次第、通常価格に移行します。<br>
+        ※ 〜表示のプランは院の規模・要件により変動します。無料診断後にお見積りします。<br>
+        ※ 月額プランは3ヶ月からのご契約となります。
+      </p>
+    </div>
+  </section>
+
   <!-- FLOW -->
   <section class="flow">
     <div class="container">
@@ -1043,6 +1313,14 @@
   </footer>
 
   <script>
+    // Pricing tabs
+    function switchTab(tab) {
+      document.querySelectorAll('.pricing-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.pricing-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      event.target.classList.add('active');
+    }
+
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
