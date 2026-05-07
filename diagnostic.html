@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>無料AI診断 | XAU DESIGN</title>
+  <meta name="description" content="あなたの院に最適なAI導入プランを無料で診断します。10問に答えるだけで個別レポートを生成。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f0e0c;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: rgba(201,168,76,0.15);
+      --cream: #f5f0e8;
+      --mid: #6b6560;
+      --light: #a09890;
+      --white: #fdfaf5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--light);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-back:hover { color: var(--gold); }
+
+    /* WRAPPER */
+    .wrapper {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 5rem 2rem 8rem;
+    }
+
+    /* HEADER */
+    .diag-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      animation: fadeUp 0.8s 0.2s both;
+    }
+
+    .diag-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .diag-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .diag-subtitle {
+      font-size: 0.88rem;
+      color: var(--light);
+      line-height: 2;
+    }
+
+    /* PROGRESS */
+    .progress-wrap {
+      margin-bottom: 3rem;
+      animation: fadeUp 0.8s 0.4s both;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+    }
+
+    .progress-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--light);
+    }
+
+    .progress-count {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+
+    .progress-bar {
+      height: 1px;
+      background: rgba(201,168,76,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gold);
+      transition: width 0.6s ease;
+      width: 0%;
+    }
+
+    /* QUESTION CARD */
+    .question-card {
+      display: none;
+      animation: fadeUp 0.5s both;
+    }
+
+    .question-card.active { display: block; }
+
+    .q-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.12);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .q-text {
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+      line-height: 1.7;
+    }
+
+    .q-sub {
+      font-size: 0.78rem;
+      color: var(--light);
+      margin-bottom: 2rem;
+    }
+
+    /* OPTIONS */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border: 1px solid rgba(201,168,76,0.12);
+      cursor: pointer;
+      transition: all 0.25s;
+      background: transparent;
+      text-align: left;
+      color: var(--light);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+    }
+
+    .option:hover {
+      border-color: rgba(201,168,76,0.4);
+      color: var(--cream);
+      background: rgba(201,168,76,0.03);
+    }
+
+    .option.selected {
+      border-color: var(--gold);
+      color: var(--cream);
+      background: var(--gold-dim);
+    }
+
+    .option-marker {
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s;
+    }
+
+    .option.selected .option-marker {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .option.selected .option-marker::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--ink);
+      border-radius: 50%;
+    }
+
+    /* TEXT INPUT */
+    .text-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 0.8rem 0;
+      color: var(--cream);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.3s;
+      margin-bottom: 2.5rem;
+    }
+
+    .text-input:focus { border-color: var(--gold); }
+    .text-input::placeholder { color: var(--mid); }
+
+    /* BUTTONS */
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+
+    .btn-next {
+      padding: 0.9rem 2.5rem;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-next:hover { background: var(--gold-light); }
+    .btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .btn-back {
+      padding: 0.9rem 1.5rem;
+      background: transparent;
+      color: var(--light);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      border: 1px solid rgba(201,168,76,0.15);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-back:hover { color: var(--cream); border-color: rgba(201,168,76,0.4); }
+
+    /* DIVIDER */
+    .q-divider {
+      height: 1px;
+      background: rgba(201,168,76,0.08);
+      margin: 2rem 0;
+    }
+
+    /* LOADING */
+    .loading-screen {
+      display: none;
+      text-align: center;
+      padding: 5rem 0;
+      animation: fadeUp 0.6s both;
+    }
+
+    .loading-screen.active { display: block; }
+
+    .loading-icon {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-weight: 300;
+      color: var(--gold);
+      opacity: 0.3;
+      margin-bottom: 2rem;
+      animation: spin 4s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--light);
+      margin-bottom: 0.5rem;
+    }
+
+    .loading-sub {
+      font-size: 0.8rem;
+      color: var(--mid);
+    }
+
+    /* REPORT */
+    .report-screen {
+      display: none;
+      animation: fadeUp 0.8s both;
+    }
+
+    .report-screen.active { display: block; }
+
+    .report-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .report-badge {
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      border: 1px solid var(--gold);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .report-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+
+    .report-body {
+      background: rgba(201,168,76,0.03);
+      border: 1px solid rgba(201,168,76,0.1);
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      font-size: 0.88rem;
+      line-height: 2.2;
+      color: var(--light);
+      white-space: pre-wrap;
+    }
+
+    .report-body strong, .report-body b {
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    .report-cta {
+      text-align: center;
+      padding: 3rem;
+      border: 1px solid rgba(201,168,76,0.15);
+      background: rgba(201,168,76,0.02);
+    }
+
+    .report-cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .report-cta-body {
+      font-size: 0.82rem;
+      color: var(--light);
+      margin-bottom: 2rem;
+      line-height: 2;
+    }
+
+    .report-cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 1rem 2.5rem;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover { background: var(--gold-light); }
+
+    .btn-secondary {
+      padding: 1rem 2rem;
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover { border-color: var(--gold); }
+
+    /* ERROR */
+    .error-msg {
+      display: none;
+      padding: 1rem 1.5rem;
+      border: 1px solid rgba(255,100,100,0.3);
+      background: rgba(255,100,100,0.05);
+      font-size: 0.8rem;
+      color: #ff8080;
+      margin-bottom: 1.5rem;
+    }
+
+    .error-msg.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .wrapper { padding: 3rem 1.5rem 6rem; }
+      .report-body { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">XAU DESIGN</a>
+  <a href="index.html" class="nav-back">← トップに戻る</a>
+</nav>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="diag-header" id="diag-header">
+    <p class="diag-eyebrow">FREE AI DIAGNOSIS</p>
+    <h1 class="diag-title">無料AI診断</h1>
+    <p class="diag-subtitle">
+      10問に答えるだけで、あなたの院に最適なAI導入プランを<br>
+      Claudeが個別に分析・提案します。所要時間：約3分。
+    </p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-info">
+      <span class="progress-label">PROGRESS</span>
+      <span class="progress-count" id="progress-count">1 / 10</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- ERROR -->
+  <div class="error-msg" id="error-msg"></div>
+
+  <!-- QUESTIONS -->
+  <div id="questions-wrap">
+
+    <!-- Q1 -->
+    <div class="question-card active" data-q="1">
+      <div class="q-num">01</div>
+      <p class="q-text">院の種別を教えてください。</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, '整骨院・接骨院')">
+          <span class="option-marker"></span>整骨院・接骨院
+        </button>
+        <button class="option" onclick="selectOption(this, '鍼灸院')">
+          <span class="option-marker"></span>鍼灸院
+        </button>
+        <button class="option" onclick="selectOption(this, '整体院・カイロプラクティック')">
+          <span class="option-marker"></span>整体院・カイロプラクティック
+        </button>
+        <button class="option" onclick="selectOption(this, 'エステ・美容サロン')">
+          <span class="option-marker"></span>エステ・美容サロン
+        </button>
+        <button class="option" onclick="selectOption(this, 'その他（複合業態含む）')">
+          <span class="option-marker"></span>その他（複合業態含む）
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-next" onclick="nextQuestion()" disabled id="btn-1">次へ →</button>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-card" data-q="2">
+      <div class="q-num">02</div>
+      <p class="q-text">スタッフ数（院長含む）を教えてください。</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, '1名（院長のみ）')">
+          <span class="option-marker"></span>1名（院長のみ）
+        </button>
+        <button class="option" onclick="selectOption(this, '2〜3名')">
+          <span class="option-marker"></span>2〜3名
+        </button>
+        <button class="option" onclick="selectOption(this, '4〜6名')">
+          <span class="option-marker"></span>4〜6名
+        </button>
+        <button class="option" onclick="selectOption(this, '7名以上')">
+          <span class="option-marker"></span>7名以上
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prevQuestion()">← 戻る</button>
+        <button class="btn-next" onclick="nextQuestion()" disabled id="btn-2">次へ →</button>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-card" data-q="3">
+      <div class="q-num">03</div>
+      <p class="q-text">月の新患数はおよそ何名ですか？</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, '5名未満')">
+          <span class="option-marker"></span>5名未満
+        </button>
+        <button class="option" onclick="selectOption(this, '5〜15名')">
+          <span class="option-marker"></span>5〜15名
+        </button>
+        <button class="option" onclick="selectOption(this, '16〜30名')">
+          <span class="option-marker"></span>16〜30名
+        </button>
+        <button class="option" onclick="selectOption(this, '31名以上')">
+          <span class="option-marker"></span>31名以上
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prevQuestion()">← 戻る</button>
+        <button class="btn-next" onclick="nextQuestion()" disabled id="btn-3">次へ →</button>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-card" data-q="4">
+      <div class="q-num">04</div>
+      <p class="q-text">LINE公式アカウントの運用状況を教えてください。</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, '持っていない')">
+          <span class="option-marker"></span>持っていない
+        </button>
+        <button class="option" onclick="selectOption(this, '持っているが、ほぼ使っていない')">
+          <span class="option-marker"></span>持っているが、ほぼ使っていない
+        </button>
+        <button class="option" onclick="selectOption(this, '手動で不定期に送っている')">
+          <span class="option-marker"></span>手動で不定期に送っている
+        </button>
+        <button class="option" onclick="selectOption(this, '定期的に活用している')">
+          <span class="option-marker"></span>定期的に活用している
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prevQuestion()">← 戻る</button>
+        <button class="btn-next" onclick="nextQuestion()" disabled id="btn-4">次へ →</button>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-card" data-q="5">
+      <div class="q-num">05</div>
+      <p class="q-text">SNS（Instagram・X等）の運用状況を教えてください。</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, '運用していない')">
+          <span class="option-marker"></span>運用していない
+        </button>
+        <button class="option" onclick="selectOption(this, 'アカウントはあるが更新が止まっている')">
+          <span class="option-marker"></span>アカウントはあるが更新が止まっている
+        </button>
+        <button class="option" onclick="selectOption(this, '月1〜4回程度更新している')">
+          <span class="option-marker"></span>月1〜4回程度更新している
+        </button>
+        <button class="option" onclick="selectOption(this, '週2回以上継続できている')">
+          <span class="option-marker"></span>週2回以上継続できている
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prevQuestion()">← 戻る</button>
+        <button class="btn-next" onclick="nextQuestion()" disabled id="btn-5">次へ →</button>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-card" data-q="6">
+      <div class="q-num">06</div>
+      <p class="q-text">初回来院後の患者フォローはどうしていますか？</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, '特に何もしていない')">
+          <span class="option-marker"></span>特に何もしていない
+        </button>
+        <button class="option" onclick="selectOption(this, '気が向いたときに手動でLINEを送る')">
+          <span class="option-marker"></span>気が向いたときに手動でLINEを送る
+        </button>
+        <button class="option" onclick="selectOption(this, 'ある程度ルールを決めてフォローしている')">
+          <span class="option-marker"></span>ある程度ルールを決めてフォローしている
+        </button>
+        <button class="option" onclick="selectOption(this, '自動化・仕組み化できている')">
+          <span class="option-marker"></span>自動化・仕組み化できている
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prevQuestion()">← 戻る</button>
+        <button class="btn-next" onclick="nextQuestion()" disabled id="btn-6">次へ →</button>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-card" data-q="7">
+      <div class="q-num">07</div>
+      <p class="q-text">Googleビジネスプロフィール（GBP）の管理状況は？</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, '登録していない・わからない')">
+          <span class="option-marker"></span>登録していない・わからない
+        </button>
+        <button class="option" onclick="selectOption(this, '登録はしているが放置している')">
+          <span class="option-marker"></span>登録はしているが放置している
+        </button>
+        <button class="option" onclick="selectOption(this, '投稿や写真を更新している')">
+          <span class="option-marker"></span>投稿や写真を更新している
+        </button>
+        <button class="option" onclick="selectOption(this, '口コミ返信・データ分析まで行っている')">
+          <span class="option-marker"></span>口コミ返信・データ分析まで行っている
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prevQuestion()">← 戻る</button>
+        <button class="btn-next" onclick="nextQuestion()" disabled id="btn-7">次へ →</button>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-card" data-q="8">
+      <div class="q-num">08</div>
+      <p class="q-text">経営数値（来院数・売上・離脱率など）をどのように把握していますか？</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, 'ほぼ把握していない・感覚で経営している')">
+          <span class="option-marker"></span>ほぼ把握していない・感覚で経営している
+        </button>
+        <button class="option" onclick="selectOption(this, '売上だけ把握している')">
+          <span class="option-marker"></span>売上だけ把握している
+        </button>
+        <button class="option" onclick="selectOption(this, 'Excelや手書きで複数の指標を管理している')">
+          <span class="option-marker"></span>Excelや手書きで複数の指標を管理している
+        </button>
+        <button class="option" onclick="selectOption(this, 'デジタルツールで可視化・分析できている')">
+          <span class="option-marker"></span>デジタルツールで可視化・分析できている
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prevQuestion()">← 戻る</button>
+        <button class="btn-next" onclick="nextQuestion()" disabled id="btn-8">次へ →</button>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question-card" data-q="9">
+      <div class="q-num">09</div>
+      <p class="q-text">今、院の経営で一番の課題は何ですか？</p>
+      <div class="options">
+        <button class="option" onclick="selectOption(this, '新患が増えない・集客')">
+          <span class="option-marker"></span>新患が増えない・集客
+        </button>
+        <button class="option" onclick="selectOption(this, '患者の定着率・リピート率が低い')">
+          <span class="option-marker"></span>患者の定着率・リピート率が低い
+        </button>
+        <button class="option" onclick="selectOption(this, 'スタッフの育成・定着')">
+          <span class="option-marker"></span>スタッフの育成・定着
+        </button>
+        <button class="option" onclick="selectOption(this, '事務・間接業務の負担が大きい')">
+          <span class="option-marker"></span>事務・間接業務の負担が大きい
+        </button>
+        <button class="option" onclick="selectOption(this, '売上・単価が上がらない')">
+          <span class="option-marker"></span>売上・単価が上がらない
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prevQuestion()">← 戻る</button>
+        <button class="btn-next" onclick="nextQuestion()" disabled id="btn-9">次へ →</button>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question-card" data-q="10">
+      <div class="q-num">10</div>
+      <p class="q-text">最後に、AIや自動化について一言教えてください。</p>
+      <p class="q-sub">興味はあるけど何から始めればいいかわからない、など率直にどうぞ。</p>
+      <textarea class="text-input" id="q10-text" rows="3"
+        placeholder="例：ChatGPTは使ったことがあるが、院の業務にどう使えばいいかわからない。"
+        oninput="handleTextInput()"></textarea>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prevQuestion()">← 戻る</button>
+        <button class="btn-next" onclick="submitDiagnosis()" disabled id="btn-10">診断する →</button>
+      </div>
+    </div>
+
+  </div><!-- /questions-wrap -->
+
+  <!-- LOADING -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-icon">◈</div>
+    <p class="loading-text">AI ANALYZING...</p>
+    <p class="loading-sub">あなたの院の状況をClaudeが分析しています。<br>しばらくお待ちください。</p>
+  </div>
+
+  <!-- REPORT -->
+  <div class="report-screen" id="report-screen">
+    <div class="report-header">
+      <span class="report-badge">AI DIAGNOSIS REPORT</span>
+      <h2 class="report-title">あなたの院への診断レポート</h2>
+    </div>
+    <div class="report-body" id="report-content"></div>
+    <div class="report-cta">
+      <h3 class="report-cta-title">次のステップへ</h3>
+      <p class="report-cta-body">
+        診断結果をもとに、具体的な導入プランをご提案します。<br>
+        無料相談は30分。オンラインで対応します。
+      </p>
+      <div class="report-cta-buttons">
+        <a href="https://lin.ee/XXXXXX" class="btn-primary">LINEで相談する</a>
+        <a href="index.html#pricing" class="btn-secondary">料金を確認する</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<script>
+  // ── CONFIG ──────────────────────────────────────────────
+  // RenderにデプロイしたFastAPIのURLに変更してください
+  const API_ENDPOINT = 'https://YOUR-RENDER-APP.onrender.com/diagnostic';
+  // ────────────────────────────────────────────────────────
+
+  const answers = {};
+  let current = 1;
+  const total = 10;
+
+  function updateProgress() {
+    const pct = ((current - 1) / total) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-count').textContent = current + ' / ' + total;
+  }
+
+  function selectOption(el, value) {
+    const card = el.closest('.question-card');
+    card.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    answers['q' + current] = value;
+    document.getElementById('btn-' + current).disabled = false;
+  }
+
+  function handleTextInput() {
+    const val = document.getElementById('q10-text').value.trim();
+    answers['q10'] = val || '特になし';
+    document.getElementById('btn-10').disabled = val.length === 0;
+    if (val.length === 0) document.getElementById('btn-10').disabled = false;
+    document.getElementById('btn-10').disabled = false;
+  }
+
+  function nextQuestion() {
+    if (current >= total) return;
+    document.querySelector(`[data-q="${current}"]`).classList.remove('active');
+    current++;
+    document.querySelector(`[data-q="${current}"]`).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function prevQuestion() {
+    if (current <= 1) return;
+    document.querySelector(`[data-q="${current}"]`).classList.remove('active');
+    current--;
+    document.querySelector(`[data-q="${current}"]`).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function submitDiagnosis() {
+    const q10val = document.getElementById('q10-text').value.trim();
+    answers['q10'] = q10val || '特になし';
+
+    // UI切り替え
+    document.getElementById('questions-wrap').style.display = 'none';
+    document.getElementById('progress-wrap').style.display = 'none';
+    document.getElementById('diag-header').style.display = 'none';
+    document.getElementById('error-msg').classList.remove('active');
+    document.getElementById('loading-screen').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    try {
+      const res = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers })
+      });
+
+      if (!res.ok) throw new Error('サーバーエラーが発生しました');
+
+      const data = await res.json();
+
+      document.getElementById('loading-screen').classList.remove('active');
+      document.getElementById('report-content').innerHTML = formatReport(data.report);
+      document.getElementById('report-screen').classList.add('active');
+
+    } catch (err) {
+      document.getElementById('loading-screen').classList.remove('active');
+      document.getElementById('questions-wrap').style.display = 'block';
+      document.getElementById('progress-wrap').style.display = 'block';
+      document.getElementById('diag-header').style.display = 'block';
+      const errEl = document.getElementById('error-msg');
+      errEl.textContent = '診断の生成に失敗しました。しばらく待ってから再度お試しください。';
+      errEl.classList.add('active');
+    }
+  }
+
+  function formatReport(text) {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^#{1,3}\s(.+)$/gm, '<strong>$1</strong>')
+      .replace(/\n/g, '<br>');
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
