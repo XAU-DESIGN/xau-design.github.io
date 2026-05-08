@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>利用規約 | XAU DESIGN</title>
+  <meta name="description" content="XAU DESIGNの利用規約。サービスご利用前にご確認ください。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f0e0c;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: rgba(201,168,76,0.12);
+      --cream: #f5f0e8;
+      --mid: #6b6560;
+      --light: #a09890;
+      --white: #fdfaf5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.9;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    nav {
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--light);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-back:hover { color: var(--gold); }
+
+    .page-hero {
+      padding: 6rem 4rem 4rem;
+      max-width: 860px;
+      margin: 0 auto;
+      animation: fadeUp 0.8s 0.2s both;
+    }
+
+    .page-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .page-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--light);
+    }
+
+    .gold-rule {
+      max-width: 860px;
+      margin: 0 auto 4rem;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      opacity: 0.3;
+    }
+
+    .content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 4rem 8rem;
+      animation: fadeUp 0.8s 0.4s both;
+    }
+
+    .section {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.1);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--gold-light);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.03em;
+    }
+
+    .section-body {
+      font-size: 0.9rem;
+      color: var(--light);
+      line-height: 2;
+    }
+
+    .section-body p {
+      margin-bottom: 1rem;
+    }
+
+    .section-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .section-body ul li {
+      padding: 0.4rem 0 0.4rem 1.5rem;
+      position: relative;
+      border-bottom: 1px solid rgba(201,168,76,0.06);
+    }
+
+    .section-body ul li:last-child {
+      border-bottom: none;
+    }
+
+    .section-body ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      opacity: 0.5;
+      font-size: 0.75rem;
+    }
+
+    .highlight-box {
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 1.5rem 2rem;
+      margin: 1.5rem 0;
+      background: rgba(201,168,76,0.03);
+    }
+
+    .highlight-box p {
+      font-size: 0.88rem;
+      color: var(--cream);
+      margin: 0;
+    }
+
+    .contact-block {
+      margin-top: 4rem;
+      padding: 2.5rem;
+      border: 1px solid rgba(201,168,76,0.15);
+      background: rgba(201,168,76,0.03);
+    }
+
+    .contact-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .contact-body {
+      font-size: 0.88rem;
+      color: var(--light);
+      line-height: 2;
+    }
+
+    .contact-body a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    footer {
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      opacity: 0.6;
+    }
+
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--mid);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .page-hero { padding: 4rem 1.5rem 3rem; }
+      .content { padding: 0 1.5rem 6rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">XAU DESIGN</a>
+    <a href="index.html" class="nav-back">← BACK TO HOME</a>
+  </nav>
+
+  <div class="page-hero">
+    <p class="page-eyebrow">LEGAL</p>
+    <h1 class="page-title">利用規約</h1>
+    <p class="page-date">制定日：2025年1月1日　最終改定：2025年7月1日</p>
+  </div>
+
+  <div class="gold-rule"></div>
+
+  <div class="content">
+
+    <div class="highlight-box">
+      <p>本利用規約（以下「本規約」）は、XAU DESIGN（運営：合同会社N-ONE、以下「当サービス」）が提供するウェブサイトおよびLINEを通じたサービス全般（以下「本サービス」）の利用条件を定めるものです。ご利用の前に必ずお読みください。本サービスをご利用いただいた時点で、本規約に同意いただいたものとみなします。</p>
+    </div>
+
+    <div class="section">
+      <div class="section-num">01</div>
+      <h2 class="section-title">サービスの内容</h2>
+      <div class="section-body">
+        <p>当サービスは、整骨院・鍼灸院・エステ等の治療院・美容サロンを主な対象として、以下のサービスを提供します。</p>
+        <ul>
+          <li>AIを活用した無料診断レポートの生成・提供</li>
+          <li>LINEを通じたAI業務改善コンサルティング相談</li>
+          <li>LINE自動化・Web集客・姿勢分析ツール等の導入支援</li>
+          <li>その他、当サービスが定める有償・無償サービス</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">02</div>
+      <h2 class="section-title">利用資格</h2>
+      <div class="section-body">
+        <p>本サービスは、以下の条件を満たす方がご利用いただけます。</p>
+        <ul>
+          <li>日本国内に所在する治療院・サロン等の事業者、または個人事業主</li>
+          <li>本規約の内容に同意いただける方</li>
+          <li>LINE株式会社が定める利用規約に同意のうえLINEをご利用の方</li>
+        </ul>
+        <p>未成年者の方がご利用になる場合は、保護者の同意を得たうえでご利用ください。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">03</div>
+      <h2 class="section-title">無料診断について</h2>
+      <div class="section-body">
+        <p>無料AI診断は、10問の設問への回答をもとにAIが個別レポートを生成するものです。以下の点をご了承のうえご利用ください。</p>
+        <ul>
+          <li>診断結果はAIによる自動生成であり、確定的な経営アドバイスを保証するものではありません</li>
+          <li>診断内容は、当サービスへのお問い合わせ・ご相談に活用させていただく場合があります</li>
+          <li>診断回答の内容は、サービス改善のための参考情報として統計的に利用する場合があります（個人特定なし）</li>
+          <li>無料診断のご利用は、有料サービスへの契約義務を生じさせるものではありません</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">04</div>
+      <h2 class="section-title">有料サービスの契約</h2>
+      <div class="section-body">
+        <p>有料サービスのご契約は、別途お見積りおよびご提案内容に同意いただいたうえで成立します。詳細な契約条件・支払い方法・キャンセルポリシーは、個別の契約書または書面にて定めます。</p>
+        <p>料金プランはサービスページに掲載の内容を基本としますが、院の規模・要件により変動する場合があります。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">05</div>
+      <h2 class="section-title">禁止事項</h2>
+      <div class="section-body">
+        <p>利用者は、本サービスの利用にあたり以下の行為を行ってはなりません。</p>
+        <ul>
+          <li>当サービスのシステム・コンテンツの無断複製・転載・二次利用</li>
+          <li>当サービスまたは第三者の知的財産権・プライバシーを侵害する行為</li>
+          <li>虚偽の情報を入力・送信する行為</li>
+          <li>当サービスの運営を妨げる行為（過度なアクセス、スパム送信等）</li>
+          <li>法令または公序良俗に反する行為</li>
+          <li>その他、当サービスが不適切と判断する行為</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">06</div>
+      <h2 class="section-title">免責事項</h2>
+      <div class="section-body">
+        <p>当サービスは、以下の事項について責任を負いません。</p>
+        <ul>
+          <li>AIによる診断・提案内容の正確性・完全性・将来的な有効性</li>
+          <li>本サービスの利用により生じた利用者の損害（逸失利益・間接損害を含む）</li>
+          <li>システム障害・メンテナンス・通信障害によるサービス停止・データ消失</li>
+          <li>第三者サービス（LINE・Claude API等）の仕様変更・サービス終了による影響</li>
+          <li>天災・感染症・その他不可抗力による履行不能</li>
+        </ul>
+        <p>当サービスが損害賠償責任を負う場合、その上限は当該サービスの契約金額を超えないものとします。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">07</div>
+      <h2 class="section-title">知的財産権</h2>
+      <div class="section-body">
+        <p>当サービスが提供するウェブサイトのデザイン・文章・システム・診断レポートのフォーマット等に関する知的財産権は、当サービスまたは正当な権利者に帰属します。利用者は、個人的な参照目的以外でこれらを無断利用することはできません。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">08</div>
+      <h2 class="section-title">サービスの変更・停止・終了</h2>
+      <div class="section-body">
+        <p>当サービスは、以下の場合にサービス内容の変更・一時停止・終了を行うことがあります。事前の告知に努めますが、緊急の場合はこの限りではありません。</p>
+        <ul>
+          <li>システムのメンテナンス・改修時</li>
+          <li>天災・緊急事態等の不可抗力が発生した場合</li>
+          <li>経営上の理由によりサービスを継続することが困難な場合</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">09</div>
+      <h2 class="section-title">準拠法・管轄裁判所</h2>
+      <div class="section-body">
+        <p>本規約の解釈・適用は日本法に準拠します。本サービスに関して利用者と当サービスの間に紛争が生じた場合、京都地方裁判所を第一審の専属的合意管轄裁判所とします。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num">10</div>
+      <h2 class="section-title">規約の改定</h2>
+      <div class="section-body">
+        <p>当サービスは、必要に応じて本規約を予告なく改定する場合があります。改定後の規約は本ページへの掲載をもって効力を生じます。重要な変更がある場合はLINEアカウントを通じてお知らせします。継続してご利用いただいた場合、改定後の規約に同意いただいたものとみなします。</p>
+      </div>
+    </div>
+
+    <div class="contact-block">
+      <p class="contact-label">CONTACT</p>
+      <div class="contact-body">
+        <p>本規約に関するお問い合わせは、LINEアカウントよりご連絡ください。</p>
+        <p style="margin-top:0.8rem;">
+          LINE：<a href="https://lin.ee/xsZsyyqz">@254surui</a><br>
+          受付時間：平日 10:00〜18:00（土日祝を除く）
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span class="footer-logo">XAU DESIGN</span>
+    <span class="footer-copy">© 2025 XAU DESIGN. ALL RIGHTS RESERVED.</span>
+  </footer>
+
+</body>
+</html>
