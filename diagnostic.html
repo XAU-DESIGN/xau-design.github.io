@@ -463,10 +463,122 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* CONTACT FORM */
+    .contact-form-wrap {
+      margin-top: 3rem;
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 2.5rem;
+      background: rgba(201,168,76,0.03);
+    }
+
+    .contact-form-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      margin-bottom: 0.6rem;
+    }
+
+    .contact-form-desc {
+      font-size: 0.82rem;
+      color: var(--light);
+      line-height: 2;
+      margin-bottom: 2rem;
+    }
+
+    .contact-field { margin-bottom: 1.5rem; }
+
+    .contact-label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--light);
+      margin-bottom: 0.6rem;
+    }
+
+    .contact-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 0.7rem 0;
+      color: var(--cream);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .contact-input:focus { border-color: var(--gold); }
+    .contact-input::placeholder { color: var(--mid); }
+
+    .contact-submit {
+      width: 100%;
+      padding: 1.1rem;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+    }
+
+    .contact-submit:hover { background: var(--gold-light); }
+    .contact-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .contact-note {
+      font-size: 0.72rem;
+      color: var(--mid);
+      text-align: center;
+      margin-top: 1rem;
+      line-height: 1.8;
+    }
+
+    .contact-success {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .contact-success.active { display: block; }
+
+    .contact-success-icon {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .contact-success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-success-body {
+      font-size: 0.82rem;
+      color: var(--light);
+      line-height: 2;
+    }
+
     @media (max-width: 600px) {
       nav { padding: 1.2rem 1.5rem; }
       .wrapper { padding: 3rem 1.5rem 6rem; }
       .report-body { padding: 1.5rem; }
+      .contact-form-wrap { padding: 1.5rem; }
     }
   </style>
 </head>
@@ -757,15 +869,46 @@
       <h2 class="report-title">あなたの院への診断レポート</h2>
     </div>
     <div class="report-body" id="report-content"></div>
-    <div class="report-cta">
-      <h3 class="report-cta-title">次のステップへ</h3>
-      <p class="report-cta-body">
-        診断結果をもとに、具体的な導入プランをご提案します。<br>
-        無料相談は30分。オンラインで対応します。
+
+    <!-- 問い合わせフォーム -->
+    <div class="contact-form-wrap" id="contact-form-wrap">
+      <p class="contact-form-eyebrow">NEXT STEP</p>
+      <h3 class="contact-form-title">個別相談を申し込む</h3>
+      <p class="contact-form-desc">
+        この診断結果をもとに、あなたの院に合った具体的な導入プランをご提案します。<br>
+        院名・お名前・電話番号をご入力ください。SHINより直接ご連絡します。
       </p>
-      <div class="report-cta-buttons">
-        <a href="https://lin.ee/xsZsyyqz" class="btn-primary">LINEで相談する</a>
-        <a href="index.html#pricing" class="btn-secondary">料金を確認する</a>
+
+      <div id="contact-fields">
+        <div class="contact-field">
+          <label class="contact-label">院名 *</label>
+          <input type="text" class="contact-input" id="contact-clinic" placeholder="例：さくら整骨院">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label">お名前 *</label>
+          <input type="text" class="contact-input" id="contact-name" placeholder="例：田中 太郎">
+        </div>
+        <div class="contact-field">
+          <label class="contact-label">電話番号 *</label>
+          <input type="tel" class="contact-input" id="contact-phone" placeholder="例：090-1234-5678">
+        </div>
+        <button class="contact-submit" id="contact-submit-btn" onclick="submitContact()">
+          無料相談を申し込む →
+        </button>
+        <p class="contact-note">
+          ※ 送信後、SHINより2営業日以内にご連絡します。<br>
+          ※ しつこい営業は一切行いません。
+        </p>
+      </div>
+
+      <div class="contact-success" id="contact-success">
+        <div class="contact-success-icon">◈</div>
+        <h4 class="contact-success-title">送信完了しました</h4>
+        <p class="contact-success-body">
+          2営業日以内にSHINよりご連絡します。<br>
+          LINEからもお気軽にどうぞ。
+        </p>
+        <a href="https://lin.ee/xsZsyyqz" class="btn-primary" style="display:inline-block;margin-top:1.5rem;">LINEで相談する</a>
       </div>
     </div>
   </div>
@@ -773,12 +916,10 @@
 </div><!-- /wrapper -->
 
 <script>
-  // ── CONFIG ──────────────────────────────────────────────
-  // RenderにデプロイしたFastAPIのURLに変更してください
   const API_ENDPOINT = 'https://jolly-term-465xau-diagnostic.baselabo-kyoto.workers.dev';
-  // ────────────────────────────────────────────────────────
 
   const answers = {};
+  let currentReport = '';
   let current = 1;
   const total = 10;
 
@@ -799,8 +940,6 @@
   function handleTextInput() {
     const val = document.getElementById('q10-text').value.trim();
     answers['q10'] = val || '特になし';
-    document.getElementById('btn-10').disabled = val.length === 0;
-    if (val.length === 0) document.getElementById('btn-10').disabled = false;
     document.getElementById('btn-10').disabled = false;
   }
 
@@ -826,7 +965,6 @@
     const q10val = document.getElementById('q10-text').value.trim();
     answers['q10'] = q10val || '特になし';
 
-    // UI切り替え
     document.getElementById('questions-wrap').style.display = 'none';
     document.getElementById('progress-wrap').style.display = 'none';
     document.getElementById('diag-header').style.display = 'none';
@@ -844,10 +982,12 @@
       if (!res.ok) throw new Error('サーバーエラーが発生しました');
 
       const data = await res.json();
+      currentReport = data.report;
 
       document.getElementById('loading-screen').classList.remove('active');
       document.getElementById('report-content').innerHTML = formatReport(data.report);
       document.getElementById('report-screen').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
     } catch (err) {
       document.getElementById('loading-screen').classList.remove('active');
@@ -857,6 +997,38 @@
       const errEl = document.getElementById('error-msg');
       errEl.textContent = '診断の生成に失敗しました。しばらく待ってから再度お試しください。';
       errEl.classList.add('active');
+    }
+  }
+
+  async function submitContact() {
+    const clinic = document.getElementById('contact-clinic').value.trim();
+    const name   = document.getElementById('contact-name').value.trim();
+    const phone  = document.getElementById('contact-phone').value.trim();
+
+    if (!clinic || !name || !phone) {
+      alert('院名・お名前・電話番号をすべてご入力ください。');
+      return;
+    }
+
+    const btn = document.getElementById('contact-submit-btn');
+    btn.disabled = true;
+    btn.textContent = '送信中...';
+
+    try {
+      await fetch(API_ENDPOINT + '/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clinic, name, phone, answers, report: currentReport })
+      });
+
+      document.getElementById('contact-fields').style.display = 'none';
+      document.getElementById('contact-success').classList.add('active');
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = '無料相談を申し込む →';
+      alert('送信に失敗しました。しばらく待ってから再度お試しください。');
     }
   }
 
