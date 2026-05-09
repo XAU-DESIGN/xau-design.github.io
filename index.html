@@ -84,6 +84,64 @@
 
     .nav-links a:hover { color: var(--gold); }
 
+    /* ── HAMBURGER ── */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 200;
+    }
+
+    .nav-burger span {
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+      transition: all 0.35s ease;
+      transform-origin: center;
+    }
+
+    .nav-burger.open span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .nav-burger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .nav-burger.open span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,14,12,0.98);
+      z-index: 150;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+
+    .nav-mobile.open { display: flex; }
+
+    .nav-mobile a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--cream);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-mobile a:hover { color: var(--gold); }
+
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
@@ -922,6 +980,7 @@
     @media (max-width: 900px) {
       nav { padding: 1.5rem 2rem; }
       .nav-links { display: none; }
+      .nav-burger { display: flex; }
       .hero { grid-template-columns: 1fr; }
       .hero-left { padding: 8rem 2rem 4rem; }
       .hero-right { display: none; }
@@ -949,7 +1008,19 @@
       <li><a href="#pricing">料金</a></li>
       <li><a href="#contact">無料診断</a></li>
     </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="メニュー" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="#services" onclick="closeMenu()">サービス</a>
+    <a href="#about" onclick="closeMenu()">代表について</a>
+    <a href="#results" onclick="closeMenu()">実績</a>
+    <a href="#pricing" onclick="closeMenu()">料金</a>
+    <a href="#contact" onclick="closeMenu()">無料診断</a>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -1297,7 +1368,7 @@
       </p>
       <div class="cta-buttons">
         <a href="diagnostic.html" class="btn-primary">無料AI診断を受ける</a>
-        <a href="https://lin.ee/xsZsyyqz" class="btn-secondary">LINEで相談する</a>
+        <a href="https://lin.ee/xiLnEt3" class="btn-secondary">LINEで相談する</a>
       </div>
       <p class="cta-note">※ 初回診断は完全無料です。しつこい営業は一切行いません。</p>
     </div>
@@ -1344,6 +1415,21 @@
         nav.style.backdropFilter = 'none';
       }
     });
+
+    // Hamburger menu
+    function toggleMenu() {
+      const burger = document.getElementById('nav-burger');
+      const mobile = document.getElementById('nav-mobile');
+      burger.classList.toggle('open');
+      mobile.classList.toggle('open');
+      document.body.style.overflow = mobile.classList.contains('open') ? 'hidden' : '';
+    }
+
+    function closeMenu() {
+      document.getElementById('nav-burger').classList.remove('open');
+      document.getElementById('nav-mobile').classList.remove('open');
+      document.body.style.overflow = '';
+    }
   </script>
 </body>
 </html>
