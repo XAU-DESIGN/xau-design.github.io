@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XAU DESIGNの"想" | XAU DESIGN</title>
+  <meta name="description" content="XAU DESIGNが生成AIと向き合う上で大切にしている考え方。XERO AND UNSTABLEという屋号の起源から、AI時代に本当に必要な思考まで。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f0e0c;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: rgba(201,168,76,0.12);
+      --cream: #f5f0e8;
+      --mid: #6b6560;
+      --light: #a09890;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.9;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--light);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-back:hover { color: var(--gold); }
+
+    /* HERO */
+    .page-hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 8rem 4rem 5rem;
+      animation: fadeUp 0.9s 0.1s both;
+    }
+
+    .page-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .page-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .page-lead {
+      font-size: 1rem;
+      color: var(--light);
+      line-height: 2.2;
+      max-width: 560px;
+      border-left: 1px solid rgba(201,168,76,0.3);
+      padding-left: 1.5rem;
+    }
+
+    /* GOLD RULE */
+    .gold-rule {
+      max-width: 860px;
+      margin: 0 auto 5rem;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      opacity: 0.25;
+    }
+
+    /* CONTENT */
+    .content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 4rem 10rem;
+    }
+
+    /* CHAPTER */
+    .chapter {
+      margin-bottom: 6rem;
+      animation: fadeUp 0.8s both;
+    }
+
+    .chapter-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.06);
+      line-height: 1;
+      margin-bottom: -1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .chapter-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .chapter-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 300;
+      line-height: 1.3;
+      margin-bottom: 2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .chapter-body {
+      font-size: 0.92rem;
+      color: var(--light);
+      line-height: 2.3;
+    }
+
+    .chapter-body p {
+      margin-bottom: 1.5rem;
+    }
+
+    .chapter-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .chapter-body strong {
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    /* QUOTE */
+    .chapter-quote {
+      margin: 2.5rem 0;
+      padding: 1.8rem 2rem;
+      border-left: 2px solid var(--gold);
+      background: rgba(201,168,76,0.03);
+    }
+
+    .chapter-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.8;
+      margin: 0 0 0.5rem;
+    }
+
+    .chapter-quote cite {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--mid);
+    }
+
+    /* XERO UNSTABLE VISUAL */
+    .xau-origin {
+      margin: 2.5rem 0;
+      padding: 2rem 2.5rem;
+      border: 1px solid rgba(201,168,76,0.12);
+      background: rgba(201,168,76,0.02);
+    }
+
+    .xau-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .xau-word {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      min-width: 130px;
+    }
+
+    .xau-meaning {
+      font-size: 0.82rem;
+      color: var(--light);
+      line-height: 1.7;
+    }
+
+    /* THREE POWERS */
+    .powers {
+      margin: 2.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .power-item {
+      padding: 2rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .power-item:last-child {
+      border-bottom: none;
+    }
+
+    .power-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.3);
+      line-height: 1;
+      padding-top: 0.2rem;
+    }
+
+    .power-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--gold-light);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.02em;
+    }
+
+    .power-body {
+      font-size: 0.87rem;
+      color: var(--light);
+      line-height: 2.1;
+    }
+
+    /* DIVIDER */
+    .chapter-divider {
+      height: 1px;
+      background: rgba(201,168,76,0.08);
+      margin: 6rem 0;
+    }
+
+    /* CTA */
+    .page-cta {
+      text-align: center;
+      padding: 4rem 2rem;
+      border: 1px solid rgba(201,168,76,0.15);
+      background: rgba(201,168,76,0.02);
+      margin-top: 4rem;
+    }
+
+    .page-cta-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .page-cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .page-cta-body {
+      font-size: 0.85rem;
+      color: var(--light);
+      line-height: 2;
+      margin-bottom: 2rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-decoration: none;
+      transition: background 0.3s;
+      margin: 0.4rem;
+    }
+
+    .btn-primary:hover { background: var(--gold-light); }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--light);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-decoration: none;
+      transition: all 0.3s;
+      margin: 0.4rem;
+    }
+
+    .btn-secondary:hover { border-color: var(--gold); color: var(--cream); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      opacity: 0.6;
+    }
+
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--mid);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .page-hero { padding: 5rem 1.5rem 3rem; }
+      .content { padding: 0 1.5rem 7rem; }
+      .xau-row { flex-direction: column; gap: 0.3rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">XAU DESIGN</a>
+    <a href="index.html" class="nav-back">← トップに戻る</a>
+  </nav>
+
+  <div class="page-hero">
+    <p class="page-eyebrow">PHILOSOPHY</p>
+    <h1 class="page-title">XAU DESIGN<br>の<em>"想"</em></h1>
+    <p class="page-lead">
+      なぜXAU DESIGNはAIの「使い方」を教えないのか。
+      AI時代に本当に必要なものとは何か。
+      屋号の起源から、私たちの考え方の根底にあるものをすべて書きました。
+    </p>
+  </div>
+
+  <div class="gold-rule"></div>
+
+  <div class="content">
+
+    <!-- CHAPTER 01 -->
+    <div class="chapter">
+      <div class="chapter-num">01</div>
+      <p class="chapter-label">ORIGIN</p>
+      <h2 class="chapter-title">XAU DESIGNという名前の起源</h2>
+      <div class="chapter-body">
+        <p>XAUという屋号は、<strong>XERO AND UNSTABLE</strong>という造語から来ています。</p>
+
+        <div class="xau-origin">
+          <div class="xau-row">
+            <span class="xau-word">XERO</span>
+            <span class="xau-meaning">ラテン語・ギリシャ語で「知る」を意味する。体を知る、自分を知ることがボディワークと健康の根本であるという考え方から。</span>
+          </div>
+          <div class="xau-row">
+            <span class="xau-word">AND</span>
+            <span class="xau-meaning">「知る」ことと「不安定」を同時に生きる、という接続。</span>
+          </div>
+          <div class="xau-row">
+            <span class="xau-word">UNSTABLE</span>
+            <span class="xau-meaning">「健康な不安定」。安易な安定に落ち着かず、葛藤の中に居続けることが人間の本来の健康な姿だという考え方から。</span>
+          </div>
+        </div>
+
+        <p>静力学では、全ての外力を足して0になる状態が「安定」を意味します。人間も自然も本来、安定を求めます。しかし人間はときに、諦めや「所詮自分はこんなもの」という考え方のもとに自分を納得させようとします。これを<strong>「不健康な安定」</strong>と呼びます。</p>
+
+        <p>一方、「健康な不安定」とは葛藤している状態です。答えが出ていない、まだわかっていないという張りの中にいること。XAU DESIGNはこの健康な不安定を大切にします。<strong>知ることをやめない。安易な答えに落ち着かない。</strong>これが屋号に込めた姿勢です。</p>
+
+        <div class="chapter-quote">
+          <p>汝自身を知れ</p>
+          <cite>— グノーセセイアウトン（古代ギリシャ語）</cite>
+        </div>
+
+        <p>XEROの根底にはこの言葉があります。院の経営においても、AIの活用においても、まず「今の自分の院を正しく知ること」から始まります。</p>
+      </div>
+    </div>
+
+    <div class="chapter-divider"></div>
+
+    <!-- CHAPTER 02 -->
+    <div class="chapter">
+      <div class="chapter-num">02</div>
+      <p class="chapter-label">THE REAL QUESTION</p>
+      <h2 class="chapter-title">「AIの使い方」を教えるビジネスは、なぜ廃れるのか</h2>
+      <div class="chapter-body">
+        <p>ChatGPTの使い方、プロンプトの書き方、ツールの選び方——これらを教えるセミナーやコンサルが今たくさんあります。</p>
+
+        <p>しかしこれらは、近い将来ほぼ価値を失います。理由はシンプルです。<strong>生成AIの使い方は、生成AIに聞けばいいからです。</strong></p>
+
+        <p>多くの人はまだ生成AIに触れ始めたばかりなので気づいていません。しかし慣れてくれば必ず気づきます。「エラーが出たらAIに聞く」「次に何をすればいいかAIに聞く」——この循環が自然になった瞬間、「使い方を教える人」の希少性は消えます。</p>
+
+        <p>物知りであることの価値が下がっていく時代に、本当に必要なのは別の能力です。</p>
+
+        <div class="chapter-quote">
+          <p>問題が複雑になりすぎたとき、問いそのものを問いただせ</p>
+          <cite>— エンリコ・ボンビエリ（数学者）</cite>
+        </div>
+
+        <p>AIを使いこなすために必要なのは、今までの考え方の延長ではありません。<strong>一段上の次元の思考</strong>です。</p>
+      </div>
+    </div>
+
+    <div class="chapter-divider"></div>
+
+    <!-- CHAPTER 03 -->
+    <div class="chapter">
+      <div class="chapter-num">03</div>
+      <p class="chapter-label">THREE POWERS</p>
+      <h2 class="chapter-title">AI時代に本当に必要な3つの力</h2>
+      <div class="chapter-body">
+        <p>「AIで考える力が減る」という声をよく聞きます。しかしこれは正確ではありません。<strong>考えるべき事柄が変わった</strong>のです。</p>
+        <p>情報の記憶・検索・組み合わせという思考の多くはAIが引き受けました。その代わりに、より上位の思考が求められるようになっています。</p>
+
+        <div class="powers">
+          <div class="power-item">
+            <div class="power-num">1</div>
+            <div>
+              <div class="power-title">問いを立てる力</div>
+              <p class="power-body">一般に「頭が悪い」と言われる人は、この力が弱い傾向があります。正しい問いを立てるためには、自分の頭の中に知識と情報がなければなりません。思考停止とは意志の問題ではなく、<strong>思考するための材料が不足している状態</strong>です。だからこそ、AI時代においても本を読むというアナログな学習が以前より重要になります。AIに何を問うかを決めるのは、いつも人間です。</p>
+            </div>
+          </div>
+          <div class="power-item">
+            <div class="power-num">2</div>
+            <div>
+              <div class="power-title">構造を見抜く力</div>
+              <p class="power-body">メカニズムを理解することで、限られた知識が様々な場面に応用できます。数学や物理学が育てるのは答えではなく、<strong>問題を定式化する習慣</strong>です。現象を見たときに「何が変数で何が定数か」「どこに境界条件があるか」を考える癖——これはAIへの入力設計と構造が同じです。表面的なツールの使い方を覚えるより、この力を持つ人の方がAIと正しく協働できます。</p>
+            </div>
+          </div>
+          <div class="power-item">
+            <div class="power-num">3</div>
+            <div>
+              <div class="power-title">検証する力</div>
+              <p class="power-body">安易で耳当たりのいい間違った情報が溢れている今、最も持ってほしいスキルです。AIの出力を鵜呑みにしない。自分の仮説が間違っているかもしれないという前提を持ち続ける。これは知識量が増えるほど難しくなります。<strong>知っているほど検証をサボりやすくなるからです。</strong>健康な不安定の中に居続けるということは、この検証をやめないということでもあります。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chapter-divider"></div>
+
+    <!-- CHAPTER 04 -->
+    <div class="chapter">
+      <div class="chapter-num">04</div>
+      <p class="chapter-label">INFORMATION VS KNOWLEDGE</p>
+      <h2 class="chapter-title">情報と知識は違う</h2>
+      <div class="chapter-body">
+        <p><strong>情報とは、情報そのものです。</strong>知識とは、その情報を何らかの役に立てられるよう、自分が使える状態に昇華したものです。</p>
+
+        <p>この違いは重要です。AIが最も得意なのは情報の処理です。膨大な情報を瞬時に整理し、要約し、提示します。しかし、その情報を「使える状態」に変えるプロセスは、まだ人間側にある必要があります。</p>
+
+        <p>同じ情報を受け取っても、「何が書いてあったか」で止まる人と、「なぜそうなるか」「自分の院にどう使えるか」まで問う人では、AIとの協働能力に根本的な差が出ます。</p>
+
+        <p><strong>XAU DESIGNが提供するのは、情報ではなく仕組みです。</strong>院長が知識として持ち、実際に経営に使える状態で届けることが目標です。</p>
+      </div>
+    </div>
+
+    <div class="chapter-divider"></div>
+
+    <!-- CHAPTER 05 -->
+    <div class="chapter">
+      <div class="chapter-num">05</div>
+      <p class="chapter-label">WHAT WE DO</p>
+      <h2 class="chapter-title">XAU DESIGNがやること・やらないこと</h2>
+      <div class="chapter-body">
+        <p>XAU DESIGNはAIの使い方を教えません。</p>
+        <p>院長がAIを使えるようになることよりも、<strong>院が正しく動く仕組みが存在すること</strong>の方が重要だと考えているからです。</p>
+        <p>柔道整復師として10年以上現場で患者と向き合い、同時にPythonエンジニアとして自院のAIシステムを自ら開発・検証してきました。「現場を知らない人の提案」が院に合わない理由を、自分自身が経験しているからこそ、実装まで一貫して関わります。</p>
+        <p>提案するすべてのシステムはせぼねや京都という自分の院で先行導入・検証済みです。失敗も改善も全部自分に返ってくる構造の中で作った仕組みを、あなたの院に届けます。</p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="page-cta">
+      <p class="page-cta-eyebrow">NEXT STEP</p>
+      <h3 class="page-cta-title">まず、現状を知ることから。</h3>
+      <p class="page-cta-body">
+        10問に答えるだけで、あなたの院が最初に取り組むべきことをAIが個別診断します。<br>
+        費用は一切かかりません。
+      </p>
+      <a href="diagnostic.html" class="btn-primary">無料AI診断を受ける</a>
+      <a href="https://lin.ee/xsZsyyqz" class="btn-secondary">LINEで相談する</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <span class="footer-logo">XAU DESIGN</span>
+    <span class="footer-copy">© 2025 XAU DESIGN. ALL RIGHTS RESERVED.</span>
+  </footer>
+
+</body>
+</html>
